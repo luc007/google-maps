@@ -1,0 +1,21 @@
+package Presto;
+
+import org.openqa.selenium.chrome.ChromeDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+
+public class BaseTest  {
+
+	    protected static ChromeDriver driver;
+
+	    @before
+	    public static void setUp() {
+	        WebDriverManager.chromedriver().setup();
+	        driver = new ChromeDriver();
+	    }
+
+	    @AfterAll
+	    public static void tearDown() {
+	        driver.quit();
+	    }
+}

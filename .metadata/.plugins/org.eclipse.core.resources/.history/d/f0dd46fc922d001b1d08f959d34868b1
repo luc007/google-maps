@@ -1,0 +1,27 @@
+package Presto;
+
+public class BaseTest {
+
+	 private static void startChromeDriver() {
+	        String version = SystemProperties.getSingleProp("CHROMEDRIVER.VERSION");
+	        logger.info("Launching Chrome browser version " + version);
+	        WebDriverManager.chromedriver().version(version).setup();
+	        ChromeOptions options = new ChromeOptions();
+	        Map<String, Object> prefs = new HashMap<String, Object>();
+	        prefs.put("credentials_enable_service", false);
+	        prefs.put("profile.password_manager_enabled", false);
+	        prefs.put("profile.default_content_setting_values.notifications", 2);
+
+	        options.setExperimentalOption("prefs", prefs);
+	        // disable chrome is being controlled by automated software
+	        options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
+	        // disable developer mode extension popup
+	        options.setExperimentalOption("useAutomationExtension", false);
+
+	        DRIVER = new ChromeDriver( options );
+
+	        DRIVER.manage().window().maximize();
+	        DRIVER.get("about:blank");
+	    }	
+	
+}

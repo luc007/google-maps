@@ -1,0 +1,10 @@
+package Presto.pages;
+
+import Presto.BaseTest;
+
+public class Search extends BaseTest {
+
+	public void searchText(String text) {
+		
+	}
+}

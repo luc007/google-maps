@@ -1,0 +1,28 @@
+package Presto.pages;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import Presto.BaseTest;
+
+public class MapPage extends BaseTest {
+
+	By zoomIn = By.id("widget-zoom-in");
+	By zoomOut = By.id("widget-zoom-out");
+	
+	String address = "21 Burntwood Ave";
+	
+	By searchBox = By.xpath("//div[@id='searchbox']//input[@id='searchboxinput']");
+	By searchAddress = By.xpath("//div[@id='suggestions-grid']//span[contains(.,'" +  address + "')]");
+	
+	
+    public void clickZoomIn() {
+    	wait.until(ExpectedConditions.elementToBeClickable(zoomIn));
+    	driver.findElement(zoomIn).click();
+    }	
+    public void clickZoomOut() {
+    	wait.until(ExpectedConditions.elementToBeClickable(zoomOut));
+    	driver.findElement(zoomOut).click();
+    }	
+	 
+}

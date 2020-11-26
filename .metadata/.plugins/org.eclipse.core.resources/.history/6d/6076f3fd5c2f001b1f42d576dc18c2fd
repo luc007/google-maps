@@ -1,0 +1,60 @@
+package Presto.pages;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import Presto.BaseTest;
+
+public class MapPage extends BaseTest {
+
+	By zoomIn = By.id("widget-zoom-in");
+	By zoomOut = By.id("widget-zoom-out");
+
+	String address = "21 Burntwood Ave";
+
+	By searchBox = By.xpath("//div[@id='searchbox']//input[@id='searchboxinput']");
+	By searchAddress = By.xpath("//div[@id='suggestions-grid']//span[contains(.,'" +  address + "')]");
+	By canvas = By.xpath("//div[@id='scene']//canvas[@class='widget-scene-canvas']");
+
+	public void clickZoomIn() {
+		wait.until(ExpectedConditions.elementToBeClickable(zoomIn));
+		driver.findElement(zoomIn).click();
+	}	
+
+	public void clickZoomOut() {
+		wait.until(ExpectedConditions.elementToBeClickable(zoomOut));
+		driver.findElement(zoomOut).click();
+	}	
+
+
+	public static void wheelScroll(WebElement element, int deltaY, int offsetX, int offsetY)
+	{
+		WebElement element = driver.findElement(canvas);
+		
+		try{
+			String script = "var element = arguments[0];"
+					+"var deltaY = arguments[1];"
+					+"var box = element.getBoundingClientRect();"
+					+"var clientX = box.left + (arguments[2] || box.width / 2);"
+					+"var clientY = box.top + (arguments[3] || box.height / 2);"
+					+"var target = element.ownerDocument.elementFromPoint(clientX, clientY);"
+					+"for (var e = target; e; e = e.parentElement) {"
+					+"if (e === element) {"
+					+"target.dispatchEvent(new MouseEvent('mouseover', {view: window, bubbles: true, cancelable: true, clientX: clientX, clientY: clientY}));"
+					+"target.dispatchEvent(new MouseEvent('mousemove', {view: window, bubbles: true, cancelable: true, clientX: clientX, clientY: clientY}));"
+					+"target.dispatchEvent(new WheelEvent('wheel',     {view: window, bubbles: true, cancelable: true, clientX: clientX, clientY: clientY, deltaY: deltaY}));"
+					+"return;"
+					+"}"
+					+"}";  
+
+			WebElement parent = (WebElement) ((JavascriptExecutor) driver).executeScript("return arguments[0].parentNode;", element);
+			((JavascriptExecutor) driver).executeScript(script, parent, deltaY, offsetX, offsetY);
+		} catch(WebDriverException e) {
+			System.out.println("Exception caught in Catch block");
+		}
+	}    
+
+}

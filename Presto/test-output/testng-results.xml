@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="7" total="8" passed="1" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2020-11-26T16:06:44 EST" name="Default suite" finished-at="2020-11-26T16:07:12 EST" duration-ms="28144">
+    <groups>
+    </groups>
+    <test started-at="2020-11-26T16:06:44 EST" name="Default test" finished-at="2020-11-26T16:07:12 EST" duration-ms="28144">
+      <class name="Presto.Demo">
+        <test-method is-config="true" signature="setUp()[pri:0, instance:Presto.Demo@57d7f8ca]" started-at="2020-11-26T16:06:44 EST" name="setUp" finished-at="2020-11-26T16:06:54 EST" duration-ms="10615" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method signature="test()[pri:0, instance:Presto.Demo@57d7f8ca]" started-at="2020-11-26T16:06:54 EST" name="test" finished-at="2020-11-26T16:07:11 EST" duration-ms="16663" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- test -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:Presto.Demo@57d7f8ca]" started-at="2020-11-26T16:07:11 EST" name="tearDown" finished-at="2020-11-26T16:07:12 EST" duration-ms="800" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- Presto.Demo -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>

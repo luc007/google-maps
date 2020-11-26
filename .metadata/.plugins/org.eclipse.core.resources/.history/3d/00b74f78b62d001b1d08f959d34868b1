@@ -1,0 +1,14 @@
+package Presto.pages;
+
+import org.openqa.selenium.By;
+
+import Presto.BaseTest;
+
+public class Search extends BaseTest {
+
+	By searchBox = By.xpath("//div[@id='searchbox']//input[@id='searchboxinput']");
+	
+	public void searchText(String text) {
+		
+	}
+}

@@ -1,0 +1,115 @@
+package Presto;
+
+import static org.testng.Assert.assertTrue;
+
+import java.util.Map;
+
+import org.openqa.selenium.By;
+import org.testng.annotations.Test;
+
+public class Demo extends BaseTest {
+
+	@Test
+	public void goShoppingInAustin() {
+
+		Map coordinates = Map.of("latitude", 30.3079823, "longitude", -97.893803, "accuracy", 1);
+
+		driver.executeCdpCommand("Emulation.setGeolocationOverride", coordinates);
+
+//		driver.navigate().to("https://oldnavy.gap.com/stores");
+		driver.navigate().to("https://oldnavy.gap.com/stores");
+
+		var addresses = driver.findElements(By.xpath("//.[@class='address']"));
+		assertTrue(addresses.size() > 0, "No addresses found");
+		assertTrue(addresses.stream().allMatch(a -> a.getText().contains(", TX ")),
+				"Some addresses listed are not in Texas");
+	}
+
+	/*
+	 * public static void test_Selenium4_Geolocation() throws InterruptedException {
+	 * Map< String,Object> coordinates = new HashMap< String,Object>();
+	 * 
+	 * String URL = "https://www.google.ca/maps/place";
+	 * 
+	 * Create a hashmap for latitude, longitude, and accuracy as needed by Google
+	 * Maps coordinates.put("latitude", 45.2850542); coordinates.put("longitude",
+	 * -75.7313371); coordinates.put("accuracy", 100);
+	 * 
+	 * Command to emulate Geolocation
+	 * driver.executeCdpCommand("Emulation.setGeolocationOverride", coordinates);
+	 * driver.navigate().to(URL); driver.manage().window().maximize();
+	 * 
+	 * driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); Not a good
+	 * programming practice, added for demonstration Thread.sleep(5000);
+	 * 
+	 * WebElement location_icon =
+	 * driver.findElement(By.cssSelector(".icon-geolocate")); Thread.sleep(2000);
+	 * location_icon.click();
+	 * 
+	 * Thread.sleep(6000);
+	 * System.out.println("Geolocation testing with Selenium is complete"); }
+	 * 
+	 * public static void search() throws Exception { String address =
+	 * "25 Burntwood Ave";
+	 * 
+	 * By searchBox =
+	 * By.xpath("//div[@id='searchbox']//input[@id='searchboxinput']");
+	 * wait.until(ExpectedConditions.elementToBeClickable(searchBox));
+	 * driver.findElement(searchBox).sendKeys(address);
+	 * 
+	 * address = "//div[@id='suggestions-grid']//span[contains(.,'" + address +
+	 * "')]"; By listAddress = By.xpath(address);
+	 * wait.until(ExpectedConditions.elementToBeClickable(listAddress));
+	 * driver.findElement(listAddress).click();
+	 * 
+	 * }
+	 * 
+	 * private static void collapse() { By collapseImage =
+	 * By.xpath(".//*[@src='//maps.gstatic.com/tactile/pane/arrow_left_2x.png']");
+	 * wait.until(ExpectedConditions.elementToBeClickable(collapseImage));
+	 * driver.findElement(collapseImage).click();
+	 * 
+	 * }
+	 * 
+	 * public static void zoomIn() { WebElement zoom =
+	 * driver.findElement(By.xpath("//div[@class='widget-zoom-icon']"));
+	 * zoom.click(); zoom.click(); zoom.click(); zoom.click(); zoom.click(); // new
+	 * Actions(driver) // .sendKeys(Keys.CONTROL).sendKeys(Keys.ADD) // .perform();
+	 * }
+	 * 
+	 * public static void zoomOut() { WebElement html =
+	 * driver.findElement(By.tagName("html"));
+	 * html.sendKeys(Keys.chord(Keys.CONTROL, Keys.SUBTRACT)); }
+	 * 
+	 * public static void clickMe(WebElement elm) { new Actions(driver)
+	 * .moveToElement(elm, 300, 300) .click().perform(); }
+	 * 
+	 * public static void drag_and_drop(WebElement element) { Actions actions = new
+	 * Actions(driver);
+	 * 
+	 * Action dragAndDrop = actions.clickAndHold() .moveByOffset(1536, 289)
+	 * .release().build(); dragAndDrop.perform(); }
+	 * 
+	 * public static void scroll(WebElement element) { JavascriptExecutor js =
+	 * (JavascriptExecutor) driver;
+	 * js.executeScript("arguments[0].scrollIntoView(true);", element); }
+	 * 
+	 * public static void wheel_element(WebElement element, int deltaY, int offsetX,
+	 * int offsetY) { try{ String script = "var element = arguments[0];"
+	 * +"var deltaY = arguments[1];" +"var box = element.getBoundingClientRect();"
+	 * +"var clientX = box.left + (arguments[2] || box.width / 2);"
+	 * +"var clientY = box.top + (arguments[3] || box.height / 2);"
+	 * +"var target = element.ownerDocument.elementFromPoint(clientX, clientY);"
+	 * +"for (var e = target; e; e = e.parentElement) {" +"if (e === element) {"
+	 * +"target.dispatchEvent(new MouseEvent('mouseover', {view: window, bubbles: true, cancelable: true, clientX: clientX, clientY: clientY}));"
+	 * +"target.dispatchEvent(new MouseEvent('mousemove', {view: window, bubbles: true, cancelable: true, clientX: clientX, clientY: clientY}));"
+	 * +"target.dispatchEvent(new WheelEvent('wheel',     {view: window, bubbles: true, cancelable: true, clientX: clientX, clientY: clientY, deltaY: deltaY}));"
+	 * +"return;" +"}" +"}";
+	 * 
+	 * WebElement parent = (WebElement) ((JavascriptExecutor)
+	 * driver).executeScript("return arguments[0].parentNode;", element);
+	 * ((JavascriptExecutor) driver).executeScript(script, parent, deltaY, offsetX,
+	 * offsetY); }catch(WebDriverException e) {
+	 * System.out.println("Exception caught in Catch block"); } }
+	 */
+}

@@ -1,0 +1,8 @@
+package Presto.pages;
+
+public class Search extends BaseText {
+
+	public void searchText(String text) {
+		
+	}
+}

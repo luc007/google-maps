@@ -1,0 +1,115 @@
+package Presto.pages;
+
+import java.util.List;
+
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import Presto.BaseTest;
+
+public class MapPage extends BaseTest {
+
+	By zoomIn = By.id("widget-zoom-in");
+	By zoomOut = By.id("widget-zoom-out");
+	By canvas = By.xpath("//div[@id='scene']//canvas[@class='widget-scene-canvas']");
+	
+	By popupMenu = By.xpath("//div[@class='action-menu-entry-text']");
+	By geoLocate = By.cssSelector(".icon-geolocate");
+
+
+	public void selectPopupMenu(String menuItem) {
+		wait.until(ExpectedConditions.elementToBeClickable(canvas));
+		Actions builder = new Actions(driver);
+		builder.moveToElement(driver.findElement(canvas), 40, 175).contextClick().perform();
+		sleep(500);
+		List<WebElement> items = driver.findElements(popupMenu);
+		for(int i=0; i<items.size(); i++) {
+			System.out.println("Item: " + items.get(i).getText());
+		}
+		sleep(5000);
+	}
+	
+	
+	public void rightClick() {
+		wait.until(ExpectedConditions.elementToBeClickable(canvas));
+		Actions builder = new Actions(driver);
+		sleep(500);
+		builder.moveToElement(driver.findElement(canvas), 40, 175).contextClick().perform();
+		sleep(5000);
+	}
+
+	
+	public void clickZoomInByOffSetXY() {
+		wait.until(ExpectedConditions.elementToBeClickable(canvas));
+		Actions builder = new Actions(driver);
+		sleep(500);
+		builder.moveToElement(driver.findElement(canvas), 40, 175).click().perform();
+		sleep(5000);
+	}
+	
+	public void clickZoomIn() {
+		wait.until(ExpectedConditions.elementToBeClickable(zoomIn));
+		driver.findElement(zoomIn).click();
+	}	
+
+	public void clickZoomOut() {
+		wait.until(ExpectedConditions.elementToBeClickable(zoomOut));
+		driver.findElement(zoomOut).click();
+	}	
+
+
+	public void wheelScroll(int deltaY, int offsetX, int offsetY) {
+		wait.until(ExpectedConditions.presenceOfElementLocated(canvas));
+		WebElement element = driver.findElement(canvas);
+		
+		try{
+			String script = "var element = arguments[0];"
+					+"var deltaY = arguments[1];"
+					+"var box = element.getBoundingClientRect();"
+					+"var clientX = box.left + (arguments[2] || box.width / 2);"
+					+"var clientY = box.top + (arguments[3] || box.height / 2);"
+					+"var target = element.ownerDocument.elementFromPoint(clientX, clientY);"
+					+"for (var e = target; e; e = e.parentElement) {"
+					+"if (e === element) {"
+					+"target.dispatchEvent(new MouseEvent('mouseover', {view: window, bubbles: true, cancelable: true, clientX: clientX, clientY: clientY}));"
+					+"target.dispatchEvent(new MouseEvent('mousemove', {view: window, bubbles: true, cancelable: true, clientX: clientX, clientY: clientY}));"
+					+"target.dispatchEvent(new WheelEvent('wheel',     {view: window, bubbles: true, cancelable: true, clientX: clientX, clientY: clientY, deltaY: deltaY}));"
+					+"return;"
+					+"}"
+					+"}";  
+
+			WebElement parent = (WebElement) ((JavascriptExecutor) driver).executeScript("return arguments[0].parentNode;", element);
+			((JavascriptExecutor) driver).executeScript(script, parent, deltaY, offsetX, offsetY);
+			
+		} catch(WebDriverException e) {
+			System.out.println("Exception caught in Catch block");
+		}
+	}    
+	
+	public void dragElement() {
+		wait.until(ExpectedConditions.presenceOfElementLocated(canvas));
+		WebElement element = driver.findElement(canvas);
+
+		new Actions(driver)
+			.moveToElement(element, 100, 0)
+			.clickAndHold()
+			.moveByOffset(500, 0)
+			.release()
+			.build()
+			.perform();		
+	}
+
+	private void sleep(int milliSecond) {
+		try {
+			Thread.sleep(milliSecond);
+		} catch ( InterruptedException ex) {
+			System.out.println("Error: " + ex.getMessage());
+		}
+	}
+}

@@ -1,0 +1,17 @@
+package Presto.pages;
+
+import org.openqa.selenium.By;
+
+import Presto.BaseTest;
+
+public class Search extends BaseTest {
+
+	String address = "21 Burntwood Ave";
+	
+	By searchBox = By.xpath("//div[@id='searchbox']//input[@id='searchboxinput']");
+	By listAddress = By.xpath("//div[@id='suggestions-grid']//span[contains(.,'" +  address + "')]");
+	
+	public void searchText(String text) {
+		
+	}
+}
